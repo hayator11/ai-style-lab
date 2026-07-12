@@ -12,6 +12,7 @@ export default function Home() {
       <section className="mx-auto flex max-w-5xl flex-col gap-8">
         <div className="space-y-5">
           <p className="text-sm font-semibold text-rose-700">AI Style Concierge</p>
+          <p className="text-xs font-medium text-stone-500">これは検証用の仮公開版です。</p>
           <h1 className="max-w-3xl text-4xl font-bold leading-tight text-stone-950 md:text-6xl">
             似合うを入口に、挑戦する自信を育てる。
           </h1>

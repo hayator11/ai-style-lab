@@ -2,8 +2,12 @@ import type { AiProvider } from './types';
 
 export function createAiProvider(): AiProvider {
   return {
-    async estimateStyle() {
-      throw new Error('AI provider is not implemented yet.');
+    async estimateStyle(input: unknown) {
+      return {
+        mode: 'preview',
+        input,
+        message: 'AI provider keys are not set. Showing the local preview result.',
+      };
     },
   };
 }

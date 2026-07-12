@@ -5,5 +5,9 @@ export type StoredImage = {
 };
 
 export async function saveDiagnosisImage(_file: File, _kind: StoredImage['kind']): Promise<StoredImage> {
-  throw new Error('Image storage is not implemented yet.');
+  return {
+    id: crypto.randomUUID(),
+    path: 'preview/local-only',
+    kind: _kind,
+  };
 }

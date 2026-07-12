@@ -57,6 +57,8 @@ export default function ResultPage() {
   return (
     <main className="min-h-screen px-6 py-10">
       <section className="mx-auto max-w-3xl space-y-6">
+        <p className="text-xs font-medium text-stone-500">これは検証用の仮公開版です。</p>
+
         <div className="rounded-lg border border-stone-200 bg-white p-6 shadow-sm">
           <p className="text-sm font-semibold text-rose-700">スタイル傾向</p>
           <h1 className="mt-2 text-3xl font-bold text-stone-950">
