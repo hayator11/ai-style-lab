@@ -1,5 +1,8 @@
 'use client';
 
+import { boneTypes } from '@/data/boneTypes';
+import { colorSeasons } from '@/data/colorSeasons';
+import { faceTypes } from '@/data/faceTypes';
 import { supportQuestions } from '@/data/supportQuestions';
 import { checkRequiredPhotos } from '@/lib/diagnosis/checkPhotos';
 import { estimateDiagnosis } from '@/lib/diagnosis/estimateDiagnosis';
@@ -10,9 +13,56 @@ import {
   getSavedSupportAnswers,
 } from '@/lib/diagnosis/photoSession';
 import type { RequiredPhotoType, UploadedPhoto } from '@/lib/diagnosis/types';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
+
+function getCandidateImage(axis: string, candidateKey: string) {
+  if (axis === 'bone') {
+    const boneType = boneTypes.find((type) => type.key === candidateKey);
+
+    if (!boneType?.imageSrc) {
+      return null;
+    }
+
+    return {
+      src: boneType.imageSrc,
+      alt: boneType.imageAlt ?? `${boneType.displayName}の全身バランスのイメージ`,
+      gallery: [],
+    };
+  }
+
+  if (axis === 'color') {
+    const colorSeason = colorSeasons.find((season) => season.key === candidateKey);
+
+    if (!colorSeason?.imageSrc) {
+      return null;
+    }
+
+    return {
+      src: colorSeason.imageSrc,
+      alt: colorSeason.imageAlt ?? `${colorSeason.displayName}のカラーイメージ`,
+      gallery: colorSeason.imageGallery ?? [],
+    };
+  }
+
+  if (axis === 'face') {
+    const faceType = faceTypes.find((type) => type.key === candidateKey);
+
+    if (!faceType?.imageSrc) {
+      return null;
+    }
+
+    return {
+      src: faceType.imageSrc,
+      alt: faceType.imageAlt ?? `${faceType.displayName}の顔立ち印象イメージ`,
+      gallery: faceType.imageGallery ?? [],
+    };
+  }
+
+  return null;
+}
 
 export default function ResultPage() {
   const router = useRouter();
@@ -136,25 +186,60 @@ export default function ResultPage() {
                     )}
                     <div className="mt-4 space-y-3">
                       {axis.status === 'estimated' &&
-                        axis.candidates.slice(0, 3).map((candidate) => (
-                          <div key={candidate.key} className="rounded-md bg-white p-3">
-                            <div className="flex items-center justify-between gap-3">
-                              <p className="text-sm font-semibold text-stone-950">{candidate.displayName}</p>
-                              <p className="text-sm font-bold text-rose-700">{candidate.percent}%</p>
+                        axis.candidates.slice(0, 3).map((candidate) => {
+                          const candidateImage = getCandidateImage(axis.axis, candidate.key);
+
+                          return (
+                            <div key={candidate.key} className="rounded-md bg-white p-3">
+                              {candidateImage && (
+                                <>
+                                  <div className="relative mb-3 aspect-[4/5] overflow-hidden rounded-md bg-stone-100">
+                                    <Image
+                                      fill
+                                      alt={candidateImage.alt}
+                                      className="object-cover"
+                                      sizes="(min-width: 768px) 640px, 100vw"
+                                      src={candidateImage.src}
+                                    />
+                                  </div>
+                                  {candidateImage.gallery.length > 0 && (
+                                    <div className="mb-3">
+                                      <p className="mb-2 text-xs font-semibold text-stone-500">イメージ例</p>
+                                      <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-2">
+                                        {candidateImage.gallery.map((image) => (
+                                          <div key={image.src} className="relative aspect-square w-32 shrink-0 overflow-hidden rounded-md bg-stone-100 md:w-36">
+                                            <Image
+                                              fill
+                                              alt={image.alt}
+                                              className="object-cover"
+                                              sizes="144px"
+                                              src={image.src}
+                                            />
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                </>
+                              )}
+                              <div className="flex items-center justify-between gap-3">
+                                <p className="text-sm font-semibold text-stone-950">{candidate.displayName}</p>
+                                <p className="text-sm font-bold text-rose-700">{candidate.percent}%</p>
+                              </div>
+                              <div className="mt-2 h-2 overflow-hidden rounded-full bg-stone-100">
+                                <div className="h-full rounded-full bg-rose-700" style={{ width: `${candidate.percent}%` }} />
+                              </div>
+                              <p className="mt-3 text-sm leading-6 text-stone-700">{candidate.copy}</p>
+                              <div className="mt-3 space-y-1">
+                                {candidate.reasons.map((reason) => (
+                                  <p key={reason} className="text-xs leading-5 text-stone-500">
+                                    {reason}
+                                  </p>
+                                ))}
+                              </div>
                             </div>
-                            <div className="mt-2 h-2 overflow-hidden rounded-full bg-stone-100">
-                              <div className="h-full rounded-full bg-rose-700" style={{ width: `${candidate.percent}%` }} />
-                            </div>
-                            <p className="mt-3 text-sm leading-6 text-stone-700">{candidate.copy}</p>
-                            <div className="mt-3 space-y-1">
-                              {candidate.reasons.map((reason) => (
-                                <p key={reason} className="text-xs leading-5 text-stone-500">
-                                  {reason}
-                                </p>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                     </div>
                   </section>
                 ))}
@@ -183,6 +268,9 @@ export default function ResultPage() {
             <div className="rounded-lg border border-stone-200 bg-white p-5 shadow-sm">
               <h2 className="text-base font-semibold text-stone-950">表示について</h2>
               <div className="mt-3 space-y-2">
+                <p className="text-xs leading-5 text-stone-500">
+                  画像はタイプを断定する正解例ではなく、傾向や取り入れ方をイメージするための補助です。
+                </p>
                 {diagnosisResult.cautionNotes?.map((note) => (
                   <p key={note} className="text-xs leading-5 text-stone-500">
                     {note}

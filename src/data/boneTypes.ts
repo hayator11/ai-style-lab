@@ -9,6 +9,8 @@ export type BoneTypeDefinition = {
   key: BoneType;
   displayName: string;
   standardEquivalent: string;
+  imageSrc?: string;
+  imageAlt?: string;
   cues: BoneCue[];
   copy: string;
 };
@@ -18,6 +20,8 @@ export const boneTypes: BoneTypeDefinition[] = [
     key: 'line',
     displayName: 'Line',
     standardEquivalent: 'ストレート',
+    imageSrc: '/images/bone-types/line.jpg',
+    imageAlt: 'Lineタイプの全身バランスのイメージ',
     cues: [
       { text: '上半身に立体感・厚み', observability: 'photo' },
       { text: '重心: 上重心', observability: 'photo' },
@@ -38,6 +42,8 @@ export const boneTypes: BoneTypeDefinition[] = [
     key: 'curve',
     displayName: 'Curve',
     standardEquivalent: 'ウェーブ',
+    imageSrc: '/images/bone-types/curve.jpg',
+    imageAlt: 'Curveタイプの全身バランスのイメージ',
     cues: [
       { text: '上半身が薄く見える', observability: 'photo' },
       { text: '重心: 下重心', observability: 'photo' },
@@ -58,6 +64,8 @@ export const boneTypes: BoneTypeDefinition[] = [
     key: 'frame',
     displayName: 'Frame',
     standardEquivalent: 'ナチュラル',
+    imageSrc: '/images/bone-types/frame.jpg',
+    imageAlt: 'Frameタイプの全身バランスのイメージ',
     cues: [
       { text: '首: 標準から長めで筋や骨が見えやすい', observability: 'photo' },
       { text: '膝のお皿: 大きく四角く見える', observability: 'photo' },

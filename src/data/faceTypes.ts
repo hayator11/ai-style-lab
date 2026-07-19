@@ -4,6 +4,12 @@ export type FaceTypeDefinition = {
   key: FaceType;
   displayName: string;
   standardEquivalent: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  imageGallery?: {
+    src: string;
+    alt: string;
+  }[];
   axis: {
     childAdult: FaceChildAdult;
     curveStraight: FaceCurveStraight;
@@ -18,6 +24,13 @@ export const faceTypes: FaceTypeDefinition[] = [
     key: 'pop',
     displayName: 'Pop',
     standardEquivalent: 'キュート',
+    imageSrc: '/images/face-types/pop-diagram.jpg',
+    imageAlt: 'Popタイプの顔立ち診断イメージ',
+    imageGallery: [
+      { src: '/images/face-types/pop.jpg', alt: 'Popタイプの雰囲気イメージ' },
+      { src: '/images/face-types/gallery/pop-styling.jpg', alt: 'Popタイプのスタイリングイメージ' },
+      { src: '/images/face-types/gallery/pop-hair.jpg', alt: 'Popタイプのヘアと小物イメージ' },
+    ],
     axis: {
       childAdult: 'child',
       curveStraight: 'curve',
@@ -36,6 +49,13 @@ export const faceTypes: FaceTypeDefinition[] = [
     key: 'clear',
     displayName: 'Clear',
     standardEquivalent: 'フレッシュ',
+    imageSrc: '/images/face-types/clear-diagram.jpg',
+    imageAlt: 'Clearタイプの顔立ち診断イメージ',
+    imageGallery: [
+      { src: '/images/face-types/clear.jpg', alt: 'Clearタイプの雰囲気イメージ' },
+      { src: '/images/face-types/gallery/clear-styling.jpg', alt: 'Clearタイプのスタイリングイメージ' },
+      { src: '/images/face-types/gallery/clear-hair.jpg', alt: 'Clearタイプのヘアと小物イメージ' },
+    ],
     axis: {
       childAdult: 'child',
       curveStraight: 'straight',
@@ -53,6 +73,13 @@ export const faceTypes: FaceTypeDefinition[] = [
     key: 'bloom',
     displayName: 'Bloom',
     standardEquivalent: 'フェミニン',
+    imageSrc: '/images/face-types/bloom-diagram.jpg',
+    imageAlt: 'Bloomタイプの顔立ち診断イメージ',
+    imageGallery: [
+      { src: '/images/face-types/bloom.jpg', alt: 'Bloomタイプの雰囲気イメージ' },
+      { src: '/images/face-types/gallery/bloom-styling.jpg', alt: 'Bloomタイプのスタイリングイメージ' },
+      { src: '/images/face-types/gallery/bloom-hair.jpg', alt: 'Bloomタイプのヘアと小物イメージ' },
+    ],
     axis: {
       childAdult: 'adult',
       curveStraight: 'curve',
@@ -70,6 +97,13 @@ export const faceTypes: FaceTypeDefinition[] = [
     key: 'mode',
     displayName: 'Mode',
     standardEquivalent: 'クール',
+    imageSrc: '/images/face-types/mode-diagram.jpg',
+    imageAlt: 'Modeタイプの顔立ち診断イメージ',
+    imageGallery: [
+      { src: '/images/face-types/mode.jpg', alt: 'Modeタイプの雰囲気イメージ' },
+      { src: '/images/face-types/gallery/mode-styling.jpg', alt: 'Modeタイプのスタイリングイメージ' },
+      { src: '/images/face-types/gallery/mode-hair.jpg', alt: 'Modeタイプのヘアと小物イメージ' },
+    ],
     axis: {
       childAdult: 'adult',
       curveStraight: 'straight',
