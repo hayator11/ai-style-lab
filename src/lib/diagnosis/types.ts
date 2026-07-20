@@ -99,7 +99,9 @@ export type RequiredPhotoType =
   | 'fullBodyFront'
   | 'fullBodySide'
   | 'fullBodyNatural'
-  | 'colorNaturalLight';
+  | 'colorNaturalLight'
+  | 'colorFaceClose'
+  | 'colorBasicDrape';
 
 export type PhotoCondition =
   | 'naturalLight'

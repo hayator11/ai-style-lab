@@ -223,7 +223,7 @@ function createColorAxisResult(answers: Record<string, string>, photos: Uploaded
 
   const hasColorPhoto = hasRequiredAxisPhotos('personalColor', photos);
   if (hasColorPhoto) {
-    sourceGroups[0].reasons.push('自然光のカラー確認用写真が揃っている状態です。');
+    sourceGroups[0].reasons.push('自然光・顔アップ・ベーシック色のカラー確認用写真が揃っている状態です。');
   }
 
   if (observed < 3 || !hasColorPhoto) {
@@ -233,7 +233,7 @@ function createColorAxisResult(answers: Record<string, string>, photos: Uploaded
       reasons: sourceGroups.flatMap((group) => group.reasons),
       sourceGroups,
       guidance:
-        '自然光・加工なしの色を見るための写真と、色の好みに関するご回答がそろうと、カラー傾向を確認できます。',
+        '自然光の正面顔写真、肌・瞳・髪を見る顔アップ写真、ベーシック色を当てた写真と、色の好みに関するご回答がそろうと、カラー傾向を確認できます。',
     });
   }
 
@@ -250,7 +250,7 @@ function createColorAxisResult(answers: Record<string, string>, photos: Uploaded
     reasons: sourceGroups.flatMap((group) => group.reasons),
     note: isNeutral
       ? 'どちらのベースにも寄りきらない傾向として、両方の活かし方をご紹介します。'
-      : '写真条件による変化を前提に、低めの推定度で表示しています。',
+      : 'カラー用写真3枚の一貫性を前提にしつつ、写真条件による変化も考慮して控えめな推定度で表示しています。',
     isNeutral,
     featureSources: ['photo', 'selfReport'],
     sourceReasonGroups: sourceGroups,
